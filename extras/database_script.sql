@@ -14,9 +14,9 @@ DROP TABLE IF EXISTS `miton`.`usuario` ;
 CREATE  TABLE IF NOT EXISTS `miton`.`usuario` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `nombre` VARCHAR(150) NOT NULL ,
-  `correo` VARCHAR(100) NOT NULL ,
-  `contrasena` VARCHAR(100) NOT NULL ,
-  `activo` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `email` VARCHAR(100) NOT NULL ,
+  `password` VARCHAR(100) NOT NULL ,
+  `activo` ENUM('0','1') NOT NULL DEFAULT '0' ,
   `llave_activacion` VARCHAR(150) NOT NULL ,
   `ulltima_visita` DATETIME NOT NULL ,
   `cont_fallos` INT NOT NULL ,
@@ -24,7 +24,7 @@ CREATE  TABLE IF NOT EXISTS `miton`.`usuario` (
   `imagen` VARCHAR(150) NULL ,
   `fecha_creada` DATE NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `correo_UNIQUE` (`correo` ASC) )
+  UNIQUE INDEX `correo_UNIQUE` (`email` ASC) )
 ENGINE = InnoDB;
 
 
