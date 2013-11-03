@@ -20,7 +20,7 @@
 	
 <?php $this->widget('bootstrap.widgets.TbNavbar', array(
     'type'=>'inverse', // null or 'inverse'
-    'brand'=>'Project name',
+    'brand'=>Yii::app()->name,
     'brandUrl'=>'#',
     'collapse'=>true, // requires bootstrap-responsive.css
     'items'=>array(
@@ -70,9 +70,9 @@
 
 	<div class="clear"></div>
 </div>
-	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
+	<div class="container text-right">
+		Copyright &copy; <?php echo date('Y'); ?> by DAW<br/>
+		All Rights Reserved<br/>
 		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->
 

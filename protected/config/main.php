@@ -9,7 +9,7 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',	
+	'name'=>'DAW',	
 
 	// preloading 'log' component
 	'preload'=>array('log','bootstrap'),
@@ -61,7 +61,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=ascijuegos',
+			'connectionString' => 'mysql:host=localhost;dbname=miton',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
