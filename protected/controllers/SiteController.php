@@ -21,18 +21,17 @@ class SiteController extends Controller
 		);
 	}
 
-	/**
+	/*
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
-	 */
-	public function actionIndex()
+
+	*public function actionIndex()
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 		$this->render('index');
 	}
 
-	/**
 	 * This is the action to handle external exceptions.
 	 */
 	public function actionError()
@@ -75,32 +74,49 @@ class SiteController extends Controller
 	/**
 	 * Displays the login page
 	 */
+	public function actionIndex()
+	{
+		$model=new LoginForm;
+
+		$this->layout='//layouts/column1';
+		
+		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form') {
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+		
+		if(isset($_POST['LoginForm'])) {
+			$model->attributes=$_POST['LoginForm'];			
+			if($model->validate() && $model->login())
+				$this->redirect(Yii::app()->user->returnUrl);
+		}		
+		$this->render('login',array('model'=>$model));
+	}
+
 	public function actionLogin()
 	{
 		$model=new LoginForm;
 
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
+		$this->layout='//layouts/column1';
+		
+		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
+		
+		if(isset($_POST['LoginForm'])) {
+			$model->attributes=$_POST['LoginForm'];			
 			if($model->validate() && $model->login())
 				$this->redirect(Yii::app()->user->returnUrl);
-		}
-		// display the login form
+		}		
 		$this->render('login',array('model'=>$model));
-	}
+	}	
+
 
 	/**
 	 * Logs out the current user and redirect to homepage.
 	 */
+
 	public function actionLogout()
 	{
 		Yii::app()->user->logout();

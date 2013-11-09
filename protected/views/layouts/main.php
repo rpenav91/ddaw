@@ -27,9 +27,10 @@
         array(
             'class'=>'bootstrap.widgets.TbMenu',
             'items'=>array(
-                array('label'=>'Home', 'url'=>'#', 'active'=>true),
-                array('label'=>'Link', 'url'=>'#'),
-                array('label'=>'Dropdown', 'url'=>'#', 'items'=>array(
+                array('label'=>'Inicio', 'url'=>array('site/index'), 'active'=>true),
+                array('label'=>'Tiendas', 'url'=>'#'),
+                array('label'=>Yii::app()->user->name, 'url'=>array('usuario/'.Yii::app()->user->id), 'visible'=>!Yii::app()->user->isGuest),
+                /*array('label'=>'Dropdown', 'url'=>'#', 'items'=>array(
                     array('label'=>'Action', 'url'=>'#'),
                     array('label'=>'Another action', 'url'=>'#'),
                     array('label'=>'Something else here', 'url'=>'#'),
@@ -37,22 +38,23 @@
                     array('label'=>'NAV HEADER'),
                     array('label'=>'Separated link', 'url'=>'#'),
                     array('label'=>'One more separated link', 'url'=>'#'),
-                )),
+                )),*/
             ),
         ),
-        '<form class="navbar-search pull-left" action=""><input type="text" class="search-query span2" placeholder="Search"></form>',
+        '<form class="navbar-search pull-right" action=""><input type="text" class="search-query span2" placeholder="Search"></form>',
         array(
             'class'=>'bootstrap.widgets.TbMenu',
             'htmlOptions'=>array('class'=>'pull-right'),
-            'items'=>array(
-                array('label'=>'Link', 'url'=>'#'),
-                array('label'=>'Dropdown', 'url'=>'#', 'items'=>array(
-                    array('label'=>'Action', 'url'=>'#'),
-                    array('label'=>'Another action', 'url'=>'#'),
-                    array('label'=>'Something else here', 'url'=>'#'),
+            'items'=>array(                
+                array('label'=>'Configuración','icon'=>'cog', 'url'=>'#', 'items'=>array(                    
+                    array('label'=>'Iniciar Sesión','active'=>false, 'url'=>array('site/login'), 'visible'=>Yii::app()->user->isGuest),
+                    array('label'=>'Salir ('.Yii::app()->user->name.')', 'url'=>array('site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                     '---',
+                    array('label'=>'NAV HEADER'),
                     array('label'=>'Separated link', 'url'=>'#'),
-                )),
+                    array('label'=>'One more separated link', 'url'=>'#'),
+            )),
+
             ),
         ),
     ),
@@ -66,11 +68,15 @@
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
 
+
+
 	<?php echo $content; ?>
 
 	<div class="clear"></div>
+
 </div>
-	<div class="container text-right">
+<hr >
+	<div class="container text-center">
 		Copyright &copy; <?php echo date('Y'); ?> by DAW<br/>
 		All Rights Reserved<br/>
 		<?php echo Yii::powered(); ?>

@@ -1,34 +1,28 @@
 <?php
 
 /**
- * This is the model class for table "usuario".
+ * This is the model class for table "ciudad".
  *
- * The followings are the available columns in table 'usuario':
+ * The followings are the available columns in table 'ciudad':
  * @property integer $id
+ * @property integer $pais_id
  * @property string $nombre
- * @property string $email
- * @property string $password
  * @property string $activo
- * @property string $llave_activacion
- * @property string $ulltima_visita
- * @property integer $cont_fallos
- * @property string $bloqueado
- * @property string $imagen
- * @property string $fecha_creada
  *
  * The followings are the available model relations:
- * @property Seleccion[] $seleccions
- * @property Telefono[] $telefonos
+ * @property Pais $pais
  * @property Tienda[] $tiendas
  */
-class Usuario extends CActiveRecord
+class Ciudad extends CActiveRecord
 {
+
+	public $nombre_filtro; 
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'usuario';
+		return 'ciudad';
 	}
 
 	/**
@@ -39,15 +33,13 @@ class Usuario extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, email, password, llave_activacion, ulltima_visita, cont_fallos', 'required'),
-			array('cont_fallos', 'numerical', 'integerOnly'=>true),
-			array('nombre, llave_activacion, imagen', 'length', 'max'=>150),
-			array('email, password', 'length', 'max'=>100),
-			array('activo, bloqueado', 'length', 'max'=>1),
-			array('fecha_creada', 'safe'),
+			array('pais_id, nombre', 'required'),
+			array('pais_id', 'numerical', 'integerOnly'=>true),
+			array('nombre', 'length', 'max'=>140),
+			array('activo', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, nombre, email, password, activo, llave_activacion, ulltima_visita, cont_fallos, bloqueado, imagen, fecha_creada', 'safe', 'on'=>'search'),
+			array('id, pais_id, nombre, activo, nombre_filtro', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,9 +51,8 @@ class Usuario extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'seleccions' => array(self::HAS_MANY, 'Seleccion', 'usuario_id'),
-			'telefonos' => array(self::HAS_MANY, 'Telefono', 'usuario_id'),
-			'tiendas' => array(self::HAS_MANY, 'Tienda', 'usuario_id'),
+			'pais' => array(self::BELONGS_TO, 'Pais', 'pais_id'),
+			'tiendas' => array(self::HAS_MANY, 'Tienda', 'ciudad_id'),
 		);
 	}
 
@@ -72,16 +63,9 @@ class Usuario extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'pais_id' => 'Pais',
 			'nombre' => 'Nombre',
-			'email' => 'Email',
-			'password' => 'Password',
 			'activo' => 'Activo',
-			'llave_activacion' => 'Llave Activacion',
-			'ulltima_visita' => 'Ulltima Visita',
-			'cont_fallos' => 'Cont Fallos',
-			'bloqueado' => 'Bloqueado',
-			'imagen' => 'Imagen',
-			'fecha_creada' => 'Fecha Creada',
 		);
 	}
 
@@ -103,17 +87,13 @@ class Usuario extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+
+		$criteria->with = array('pais');
 		$criteria->compare('id',$this->id);
+		$criteria->compare('pais_id',$this->pais_id);
+		$criteria->compare('pais.nombre',$this->nombre_filtro, true);
 		$criteria->compare('nombre',$this->nombre,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('password',$this->password,true);
 		$criteria->compare('activo',$this->activo,true);
-		$criteria->compare('llave_activacion',$this->llave_activacion,true);
-		$criteria->compare('ulltima_visita',$this->ulltima_visita,true);
-		$criteria->compare('cont_fallos',$this->cont_fallos);
-		$criteria->compare('bloqueado',$this->bloqueado,true);
-		$criteria->compare('imagen',$this->imagen,true);
-		$criteria->compare('fecha_creada',$this->fecha_creada,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -124,18 +104,10 @@ class Usuario extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Usuario the static model class
+	 * @return Ciudad the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
-
-	public function validatePassword($password){
-		return CPasswordHelper::verifyPassword($password, $this->password);
-	}
-
-	public function hashPassword($password){
-		return CPasswordHelper::hashPassword($password);
 	}
 }

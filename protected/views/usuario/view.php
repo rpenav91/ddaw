@@ -2,32 +2,36 @@
 $this->breadcrumbs=array(
 	'Usuarios'=>array('index'),
 	$model->id,
-);
+);?>
+<h3><?php echo $model->nombre; ?></h3>
+<div class="row">
+	<div class="span2">
+		<?php echo CHtml::image(Yii::app()->request->baseUrl.'/'.$model->imagen); ?>
+	</div>
+	<div class="span6">
+		<h4>Información</h4>
+		<?php $this->widget('bootstrap.widgets.TbDetailView',array(
+			'data'=>$model,
+			'attributes'=>array(				
+				'nombre',
+				'email',												
+				'ulltima_visita',
+				'fecha_creada',
+			),
+		)); ?>		
+	</div>
+	<div class="span4">	
+			<?php $this->widget('bootstrap.widgets.TbMenu', array(
+			    'type'=>'list',
+			    'htmlOptions'=>array('class'=>'well'),
+			    'items'=>array(
+			        array('label'=>'ANOTHER LIST HEADER'),
+			        array('label'=>'Editar', 'icon'=>'user', 'url'=>array('usuario/update/'.Yii::app()->user->id)),
+			        array('label'=>'Configuración', 'icon'=>'cog', 'url'=>'#'),
+			        array('label'=>'Help', 'icon'=>'flag', 'url'=>'#'),
+			    ),
+			)); ?>			
+	</div>
+</div>
 
-$this->menu=array(
-	array('label'=>'List Usuario','url'=>array('index')),
-	array('label'=>'Create Usuario','url'=>array('create')),
-	array('label'=>'Update Usuario','url'=>array('update','id'=>$model->id)),
-	array('label'=>'Delete Usuario','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Usuario','url'=>array('admin')),
-);
-?>
 
-<h1>View Usuario #<?php echo $model->id; ?></h1>
-
-<?php $this->widget('bootstrap.widgets.TbDetailView',array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id',
-		'nombre',
-		'email',
-		'password',
-		'activo',
-		'llave_activacion',
-		'ulltima_visita',
-		'cont_fallos',
-		'bloqueado',
-		'imagen',
-		'fecha_creada',
-	),
-)); ?>

@@ -1,6 +1,6 @@
 <?php
 
-class UsuarioController extends Controller
+class PaisController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -27,18 +27,13 @@ class UsuarioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index'),
-				'users'=>array('admin'),
-			),
-			array('allow',
-				'actions'=>array('registrarse'),
-				'users'=>array('*')
+				'actions'=>array('index','view'),
+				'users'=>array('rpena@unitec.edu'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('update','view'),
-				'users'=>array(Yii::app()->user->name),
+				'actions'=>array('create','update'),
+				'users'=>array('admin'),
 			),
-
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
@@ -55,8 +50,6 @@ class UsuarioController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->layout = '//layouts/column1';
-		
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
@@ -66,25 +59,18 @@ class UsuarioController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionRegistrarse()
+	public function actionCreate()
 	{
-		$model=new Usuario;
-
-		$this->layout = '//layouts/column1';
+		$model=new Pais;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Usuario']))
+		if(isset($_POST['Pais']))
 		{
-			$model->attributes=$_POST['Usuario'];
-			$model->llave_activacion = "h123";
-			$model->ulltima_visita = new CDbExpression('NOW()');
-			$model->password = CPasswordHelper::hashPassword($model->password);
-			$model->imagen = "images/usuario/newuser.png";
-			$model->cont_fallos = 0;
+			$model->attributes=$_POST['Pais'];
 			if($model->save())
-				$this->redirect(array('site/index'));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
@@ -99,19 +85,18 @@ class UsuarioController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		if(Yii::app()->user->id == $id){
+		$model=$this->loadModel($id);
 
-			$model=$this->loadModel($id);		
-			if(isset($_POST['Usuario']))
-			{
-				$model->attributes=$_POST['Usuario'];
-				$model->password = CPasswordHelper::hashPassword($model->password);
-				if($model->save())
-					$this->redirect(array('view','id'=>$model->id));
-			}			
-		} else {
-			$this->redirect(array('update','id'=>Yii::app()->user->id));
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Pais']))
+		{
+			$model->attributes=$_POST['Pais'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
 		}
+
 		$this->render('update',array(
 			'model'=>$model,
 		));
@@ -142,7 +127,7 @@ class UsuarioController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Usuario');
+		$dataProvider=new CActiveDataProvider('Pais');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -153,10 +138,10 @@ class UsuarioController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Usuario('search');
+		$model=new Pais('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Usuario']))
-			$model->attributes=$_GET['Usuario'];
+		if(isset($_GET['Pais']))
+			$model->attributes=$_GET['Pais'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -170,7 +155,7 @@ class UsuarioController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Usuario::model()->findByPk($id);
+		$model=Pais::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -182,7 +167,7 @@ class UsuarioController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='usuario-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='pais-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
