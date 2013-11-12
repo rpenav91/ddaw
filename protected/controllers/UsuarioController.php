@@ -56,9 +56,11 @@ class UsuarioController extends Controller
 	public function actionView($id)
 	{
 		$this->layout = '//layouts/column1';
+		$dataProvider=new CActiveDataProvider('Tienda');
 		
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+			'dataProvider'=>$dataProvider,
 		));
 	}
 
@@ -171,6 +173,7 @@ class UsuarioController extends Controller
 	public function loadModel($id)
 	{
 		$model=Usuario::model()->findByPk($id);
+
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;

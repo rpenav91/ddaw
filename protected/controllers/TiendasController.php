@@ -1,6 +1,6 @@
 <?php
 
-class PaisController extends Controller
+class TiendasController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -28,11 +28,11 @@ class PaisController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
-				'users'=>array('rpena@unitec.edu'),
+				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update'),
-				'users'=>array('rpena@unitec.edu'),
+				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
@@ -61,14 +61,17 @@ class PaisController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Pais;
+		$model=new Tienda;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Pais']))
+		if(isset($_POST['Tienda']))
 		{
-			$model->attributes=$_POST['Pais'];
+			$model->attributes=$_POST['Tienda'];
+			$model->usuario_id = Yii::app()->user->id;
+			$model->ruta = "not_define";
+			$model->fecha_creada = new CDbExpression('NOW()');
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -90,9 +93,9 @@ class PaisController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Pais']))
+		if(isset($_POST['Tienda']))
 		{
-			$model->attributes=$_POST['Pais'];
+			$model->attributes=$_POST['Tienda'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -127,7 +130,7 @@ class PaisController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Pais');
+		$dataProvider=new CActiveDataProvider('Tienda');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -138,10 +141,10 @@ class PaisController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Pais('search');
+		$model=new Tienda('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Pais']))
-			$model->attributes=$_GET['Pais'];
+		if(isset($_GET['Tienda']))
+			$model->attributes=$_GET['Tienda'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -155,7 +158,7 @@ class PaisController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Pais::model()->findByPk($id);
+		$model=Tienda::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -167,7 +170,7 @@ class PaisController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='pais-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='tienda-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

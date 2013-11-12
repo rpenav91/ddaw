@@ -1,11 +1,12 @@
 <?php
 $this->breadcrumbs=array(
-	'Paises'=>array('index'),
+	'Tiendas'=>array('index'),
 	'Manage',
 );
 
-$this->menu=array(	
-	array('label'=>'Create Pais','url'=>array('create')),
+$this->menu=array(
+	array('label'=>'List Tienda','url'=>array('index')),
+	array('label'=>'Create Tienda','url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -14,7 +15,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('pais-grid', {
+	$.fn.yiiGridView.update('tienda-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -22,7 +23,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Paises</h1>
+<h1>Manage Tiendas</h1>
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -37,13 +38,20 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 </div><!-- search-form -->
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
-	'id'=>'pais-grid',
+	'id'=>'tienda-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
+		'usuario_id',
+		'ciudad_id',
 		'nombre',
+		'direccion',
 		'activo',
+		/*
+		'ruta',
+		'fecha_creada',
+		*/
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 		),

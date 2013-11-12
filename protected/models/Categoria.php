@@ -1,28 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "ciudad".
+ * This is the model class for table "categoria".
  *
- * The followings are the available columns in table 'ciudad':
+ * The followings are the available columns in table 'categoria':
  * @property integer $id
- * @property integer $pais_id
  * @property string $nombre
- * @property string $activo
+ * @property integer $activo
  *
  * The followings are the available model relations:
- * @property Pais $pais
- * @property Tienda[] $tiendas
+ * @property Producto[] $productos
  */
-class Ciudad extends CActiveRecord
+class Categoria extends CActiveRecord
 {
-
-	public $nombre_filtro; 
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'ciudad';
+		return 'categoria';
 	}
 
 	/**
@@ -33,13 +29,12 @@ class Ciudad extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('pais_id, nombre', 'required'),
-			array('pais_id', 'numerical', 'integerOnly'=>true),
-			array('nombre', 'length', 'max'=>140),
-			array('activo', 'length', 'max'=>45),
+			array('nombre', 'required'),
+			array('activo', 'numerical', 'integerOnly'=>true),
+			array('nombre', 'length', 'max'=>150),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, pais_id, nombre, activo, nombre_filtro', 'safe', 'on'=>'search'),
+			array('id, nombre, activo', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,8 +46,7 @@ class Ciudad extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'pais' => array(self::BELONGS_TO, 'Pais', 'pais_id'),
-			'tiendas' => array(self::HAS_MANY, 'Tienda', 'ciudad_id'),
+			'productos' => array(self::HAS_MANY, 'Producto', 'categoria_id'),
 		);
 	}
 
@@ -63,7 +57,6 @@ class Ciudad extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'pais_id' => 'Pais',
 			'nombre' => 'Nombre',
 			'activo' => 'Activo',
 		);
@@ -87,13 +80,9 @@ class Ciudad extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-
-		$criteria->with = array('pais');
 		$criteria->compare('id',$this->id);
-		$criteria->compare('pais_id',$this->pais_id);
-		$criteria->compare('pais.nombre',$this->nombre_filtro, true);
 		$criteria->compare('nombre',$this->nombre,true);
-		$criteria->compare('activo',$this->activo,true);
+		$criteria->compare('activo',$this->activo);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -104,21 +93,10 @@ class Ciudad extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Ciudad the static model class
+	 * @return Categoria the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
-
-	public static function listCiudades(){
-		$model = Ciudad::model()->findAll();
-		$arreglo = array();
-		foreach ($model as $c) {
-			$arreglo[$c->id] = $c->nombre;
-		}
-
-		return $arreglo;
-
 	}
 }

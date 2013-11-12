@@ -11,7 +11,23 @@ $this->menu=array(
 
 <h1>Paises</h1>
 
-<?php $this->widget('bootstrap.widgets.TbListView',array(
+<?php
+/* $this->widget('bootstrap.widgets.TbListView',array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
-)); ?>
+));
+*/
+?>
+<div class="row-fluid">
+<?php	
+    $this->widget(
+    'bootstrap.widgets.TbThumbnails',
+    array(
+    'dataProvider' => $dataProvider,
+    'template' => "{items}\n{pager}",
+    'itemView' => '_thumb',
+    )
+    );
+?>
+</div>
+
