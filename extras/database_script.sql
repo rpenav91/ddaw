@@ -20,8 +20,8 @@ CREATE  TABLE IF NOT EXISTS `miton`.`usuario` (
   `llave_activacion` VARCHAR(150) NOT NULL ,
   `ulltima_visita` DATETIME NOT NULL ,
   `cont_fallos` INT NOT NULL ,
-  `bloqueado` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `imagen` VARCHAR(150) NULL ,
+  `bloqueado` ENUM('0','1') NOT NULL DEFAULT '0' ,
+  `imagen` VARCHAR(150) NULL DEFAULT 'images/usuario/newuser.png' ,
   `fecha_creada` DATE NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `correo_UNIQUE` (`email` ASC) )
@@ -35,7 +35,8 @@ DROP TABLE IF EXISTS `miton`.`pais` ;
 
 CREATE  TABLE IF NOT EXISTS `miton`.`pais` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `nombre` VARCHAR(45) NOT NULL ,
+  `codigo` VARCHAR(2) NOT NULL ,
+  `nombre` VARCHAR(100) NOT NULL ,
   `activo` TINYINT(1) NOT NULL DEFAULT 1 ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
