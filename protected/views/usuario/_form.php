@@ -16,7 +16,10 @@
 
 	<?php echo $form->passwordFieldRow($model,'password',array('placeholder'=>"**********",'maxlength'=>100)); ?>	
 
-	<?php echo $form->checkBoxListRow($model,'activo',array('')); ?>
+	<?php 
+		if(!Yii::app()->user->isGuest)
+		echo $form->checkBoxListRow($model,'activo',array('')); 		
+	?>
 
 	<?php //echo $form->textFieldRow($model,'llave_activacion',array('class'=>'span5','maxlength'=>150)); ?>
 

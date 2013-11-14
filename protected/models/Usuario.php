@@ -45,10 +45,10 @@ class Usuario extends CActiveRecord
 			array('email, password', 'length', 'max'=>100),
 			array('activo, bloqueado', 'length', 'max'=>1),
 			array('fecha_creada', 'safe'),
-			array('imagen','file','types'=>'jpg,gif,png'),
+			array('imagen','file','allowEmpty'=>true,'types'=>'jpg,gif,png'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, nombre, email, password, activo, llave_activacion, ulltima_visita, cont_fallos, bloqueado, imagen, fecha_creada', 'safe', 'on'=>'search'),
+			array('id, nombre, email, password, activo, llave_activacion, ulltima_visita, cont_fallos, bloqueado, fecha_creada', 'safe', 'on'=>'search'),
 		);
 	}
 

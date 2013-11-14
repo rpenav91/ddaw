@@ -70,7 +70,7 @@ class UsuarioController extends Controller
 	 */
 	public function actionRegistrarse()
 	{
-		$model=new Usuario;
+		$model = new Usuario();
 
 		$this->layout = '//layouts/column1';
 
@@ -91,6 +91,9 @@ class UsuarioController extends Controller
 			//echo '<br>imagen es '.$model->imagen;			
 			$model->password = CPasswordHelper::hashPassword($model->password);			
 			$model->cont_fallos = 0;
+
+	
+				
 			if($model->save()) {
 				$model->imagen->saveAs($images_path . '/' . $model->imagen);
 				$this->redirect(array('site/index'));				
