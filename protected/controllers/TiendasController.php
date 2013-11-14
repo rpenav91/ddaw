@@ -36,7 +36,7 @@ class TiendasController extends Controller
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('rpena@unitec.edu'),
+				'users'=>array('adminusr@daw.com'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),

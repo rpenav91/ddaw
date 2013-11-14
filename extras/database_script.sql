@@ -305,3 +305,12 @@ USE `miton` ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `miton`.`usuario`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `miton`;
+INSERT INTO `miton`.`usuario` (`id`, `nombre`, `email`, `password`, `activo`, `llave_activacion`, `ulltima_visita`, `cont_fallos`, `bloqueado`, `imagen`, `fecha_creada`) VALUES (1, 'Administrador', 'adminusr@daw.com', '$2a$13$13bPOhrY/1BM6dWIriTFne7Irkt8GWRaqh8kSyAekEy0wic5kvWHe', '1', 'none', '2013-11-12 17:26:10', 0, '0', 'images/usuario/newuser.png', '2013-11-12 17:26:10');
+
+COMMIT;

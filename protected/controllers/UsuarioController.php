@@ -79,14 +79,22 @@ class UsuarioController extends Controller
 
 		if(isset($_POST['Usuario']))
 		{
-			$model->attributes=$_POST['Usuario'];
+			print_r($_POST);
+			//Yii::app()->end();
+			$model->attributes=$_POST['Usuario'];			
+			$model->imagen = CUploadedFile::getInstance($model,'imagen');
 			$model->llave_activacion = "h123";
 			$model->ulltima_visita = new CDbExpression('NOW()');
-			$model->password = CPasswordHelper::hashPassword($model->password);
-			$model->imagen = "images/usuario/newuser.png";
+			$model->fecha_creada = new CDbExpression('NOW()');
+			$images_path = realpath(Yii::app()->basePath . '/../images/usuario');
+			
+			//echo '<br>imagen es '.$model->imagen;			
+			$model->password = CPasswordHelper::hashPassword($model->password);			
 			$model->cont_fallos = 0;
-			if($model->save())
-				$this->redirect(array('site/index'));
+			if($model->save()) {
+				$model->imagen->saveAs($images_path . '/' . $model->imagen);
+				$this->redirect(array('site/index'));				
+			}
 		}
 
 		$this->render('create',array(

@@ -28,7 +28,7 @@ $this->pageTitle=Yii::app()->name . ' - Inicio';
 		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'Login')); ?>	 
 		<br>
 		<br>
-		<p class="text-center"><a href="registrarse">¿Eres Nuevo? Regístrate Aquí</a></p>
+		<p class="text-center"><?php echo CHtml::link('Sign Up',array('usuario/registrarse')); ?></p>
 		<?php $this->endWidget(); ?>
 
 	</div><!-- span3 -->
@@ -50,4 +50,4 @@ $this->pageTitle=Yii::app()->name . ' - Inicio';
 		</div>
 	<?php endif; ?>
 
-</div
+</div>

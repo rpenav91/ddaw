@@ -1,6 +1,7 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'usuario-form',
 	'type'=>'horizontal',
+	'htmlOptions' => array('enctype' => 'multipart/form-data'),
 	'enableAjaxValidation'=>false,
 )); ?>
 
@@ -15,7 +16,7 @@
 
 	<?php echo $form->passwordFieldRow($model,'password',array('placeholder'=>"**********",'maxlength'=>100)); ?>	
 
-	<?php //echo $form->textFieldRow($model,'activo',array('class'=>'span5','maxlength'=>1)); ?>
+	<?php echo $form->checkBoxListRow($model,'activo',array('')); ?>
 
 	<?php //echo $form->textFieldRow($model,'llave_activacion',array('class'=>'span5','maxlength'=>150)); ?>
 
@@ -25,7 +26,9 @@
 
 	<?php //echo $form->textFieldRow($model,'bloqueado',array('class'=>'span5','maxlength'=>1)); ?>
 
-	<?php echo $form->textFieldRow($model,'imagen',array('class'=>'span5','maxlength'=>150)); ?>
+	<?php //echo $form->textFieldRow($model,'imagen',array('class'=>'span5','maxlength'=>150)); ?>
+
+	<?php echo $form->fileFieldRow($model, 'imagen'); ?>
 
 	<?php //echo $form->textFieldRow($model,'fecha_creada',array('class'=>'span5')); ?>	
 

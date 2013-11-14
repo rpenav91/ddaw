@@ -6,7 +6,10 @@ $this->breadcrumbs=array(
 <h3><?php echo $model->nombre; ?></h3>
 <div class="row-fluid">
 	<div class="span2">
-		<?php echo CHtml::image(Yii::app()->request->baseUrl.'/'.$model->imagen); ?>
+		<?php 
+			$images_path = realpath(Yii::app()->basePath . '/../images/usuario');
+			echo CHtml::image(Yii::app()->request->baseUrl.'/images/usuario/'.$model->imagen); 
+		?>
 	</div>
 	<div class="span7">
 		<h4>Información</h4>
@@ -14,14 +17,17 @@ $this->breadcrumbs=array(
 			'data'=>$model,
 			'attributes'=>array(				
 				'nombre',
-				'email',												
+				array(
+					'label'=>'Correo',
+					'value'=>CHtml::mailto($model->email,$model->email),
+					'type'=>'raw',
+				),
 				'ulltima_visita',
 				'fecha_creada',
 			),
 		)); ?>
 
-		<h4>Tiendas de <?php echo $model->nombre; ?></h4>
-
+		<h4>Tiendas de <?php echo $model->nombre; ?></h4>		
 		<?php	
 		    /*$this->widget(
 		    'bootstrap.widgets.TbThumbnails',
