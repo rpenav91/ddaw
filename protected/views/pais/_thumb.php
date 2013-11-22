@@ -1,4 +1,4 @@
-	<li class="thumbnail span3" style="">
+	<li class="thumbnail helper span3" style="">
     <div>
     <a href="#" class="" rel="tooltip" data-title="Tooltip">
         <img src="http://placehold.it/280x180" alt="">

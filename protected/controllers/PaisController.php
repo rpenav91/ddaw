@@ -127,7 +127,9 @@ class PaisController extends Controller
 	 */
 	public function actionIndex()
 	{
+
 		$dataProvider=new CActiveDataProvider('Pais');
+		$dataProvider->pagination->pageSize = 16;
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
