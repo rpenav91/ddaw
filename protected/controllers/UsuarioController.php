@@ -81,8 +81,13 @@ class UsuarioController extends Controller
 		{
 			print_r($_POST);
 			//Yii::app()->end();
+
 			$model->attributes=$_POST['Usuario'];			
 			$model->imagen = CUploadedFile::getInstance($model,'imagen');
+
+			if(empty($model->imagen)){
+				$model->imagen = "newuser.png";
+			}
 			$model->llave_activacion = "h123";
 			$model->ulltima_visita = new CDbExpression('NOW()');
 			$model->fecha_creada = new CDbExpression('NOW()');
@@ -91,11 +96,13 @@ class UsuarioController extends Controller
 			//echo '<br>imagen es '.$model->imagen;			
 			$model->password = CPasswordHelper::hashPassword($model->password);			
 			$model->cont_fallos = 0;
-
 	
 				
 			if($model->save()) {
-				$model->imagen->saveAs($images_path . '/' . $model->imagen);
+				if($model->imagen != 'newuser.png'){
+					$model->imagen->saveAs($images_path . '/' . $model->imagen);
+				}
+				
 				$this->redirect(array('site/index'));				
 			}
 		}
@@ -119,8 +126,21 @@ class UsuarioController extends Controller
 			{
 				$model->attributes=$_POST['Usuario'];
 				$model->password = CPasswordHelper::hashPassword($model->password);
-				if($model->save())
+
+				$model->imagen = CUploadedFile::getInstance($model,'imagen');
+
+				if(empty($model->imagen)){
+					$model->imagen = "newuser.png";
+				}
+				
+				$images_path = realpath(Yii::app()->basePath . '/../images/usuario');				
+
+				if($model->save()){
+					if($model->imagen != 'newuser.png'){
+						$model->imagen->saveAs($images_path . '/' . $model->imagen);
+					}
 					$this->redirect(array('view','id'=>$model->id));
+				}
 			}			
 		} else {
 			$this->redirect(array('update','id'=>Yii::app()->user->id));

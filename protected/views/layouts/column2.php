@@ -5,7 +5,7 @@
 		<?php echo $content; ?>
 	</div>
 		
-	<div class="span3">
+	<div class="span3">		
 		<?php
 			$this->beginWidget('bootstrap.widgets.TbMenu', array(
 				'type'=>'list',
@@ -13,10 +13,8 @@
 				'stacked'=>false,
 				'items'=>$this->menu,
 			));				
-			$this->endWidget();
-			
+			$this->endWidget();			
 		?>
-
 	</div>
 </div> <!--row-fluid del column2-->
 

@@ -130,6 +130,7 @@ class TiendasController extends Controller
 	 */
 	public function actionIndex()
 	{
+		$this->layout = '//layouts/column2_1';
 		$dataProvider=new CActiveDataProvider('Tienda');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,

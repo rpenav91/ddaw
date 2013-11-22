@@ -55,7 +55,7 @@ return array(
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 				'login'=>'site/login',
-				'registrarse'=>'usuario/registrarse'
+				'registrarse'=>'usuario/registrarse',				
 			),
 		),
 
@@ -65,7 +65,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=miton',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'cristelia',
+			'password' => '',
 			'charset' => 'utf8',
 		),
 		

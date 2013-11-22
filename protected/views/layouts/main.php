@@ -27,8 +27,8 @@
         array(
             'class'=>'bootstrap.widgets.TbMenu',
             'items'=>array(
-                array('label'=>'Inicio', 'url'=>array('site/index'), 'active'=>true),
-                array('label'=>'Tiendas', 'url'=>'#'),
+                array('label'=>'Inicio', 'url'=>array('site/index')),
+                array('label'=>'Tiendas', 'url'=>array('tiendas/index')),
                 array('label'=>Yii::app()->user->name, 'url'=>array('usuario/'.Yii::app()->user->id), 'visible'=>!Yii::app()->user->isGuest),
                 /*array('label'=>'Dropdown', 'url'=>'#', 'items'=>array(
                     array('label'=>'Action', 'url'=>'#'),
@@ -75,8 +75,7 @@
 	<div class="clear"></div>
 
 </div>
-<hr >
-	<div class="container text-center">
+	<div class="footer text-center">
 		Copyright &copy; <?php echo date('Y'); ?> by DAW<br/>
 		All Rights Reserved<br/>
 		<?php echo Yii::powered(); ?>
