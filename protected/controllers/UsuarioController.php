@@ -56,7 +56,13 @@ class UsuarioController extends Controller
 	public function actionView($id)
 	{
 		$this->layout = '//layouts/column1';
-		$dataProvider=new CActiveDataProvider('Tienda');
+		$dataProvider=new CActiveDataProvider('Tienda', 
+			array(
+    			'criteria'=>array(
+   					'condition'=>'usuario_id='.$id,
+   				)
+   			)
+		);
 		
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),

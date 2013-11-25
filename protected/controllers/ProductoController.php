@@ -1,6 +1,6 @@
 <?php
 
-class TiendasController extends Controller
+class ProductoController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -36,7 +36,7 @@ class TiendasController extends Controller
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('adminusr@daw.com'),
+				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -61,23 +61,20 @@ class TiendasController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Tienda;
+		$model=new Producto;		
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Tienda']))
+		if(isset($_POST['Producto']))
 		{
-			$model->attributes=$_POST['Tienda'];
-			$model->usuario_id = Yii::app()->user->id;
-			$model->ruta = "not_define";
-			$model->fecha_creada = new CDbExpression('NOW()');
+			$model->attributes=$_POST['Producto'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$model,			
 		));
 	}
 
@@ -93,9 +90,9 @@ class TiendasController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Tienda']))
+		if(isset($_POST['Producto']))
 		{
-			$model->attributes=$_POST['Tienda'];
+			$model->attributes=$_POST['Producto'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -130,18 +127,9 @@ class TiendasController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$this->layout = '//layouts/column2_1';		
-
-		$model=new Ciudad('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Ciudad']))
-			$model->attributes=$_GET['Ciudad'];
-
-		$dataProvider=new CActiveDataProvider('Tienda');
-		$dataProvider->pagination->pageSize = 16;
+		$dataProvider=new CActiveDataProvider('Producto');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-			'model'=>$model,
 		));
 	}
 
@@ -150,10 +138,10 @@ class TiendasController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Tienda('search');
+		$model=new Producto('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Tienda']))
-			$model->attributes=$_GET['Tienda'];
+		if(isset($_GET['Producto']))
+			$model->attributes=$_GET['Producto'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -167,7 +155,7 @@ class TiendasController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Tienda::model()->findByPk($id);
+		$model=Producto::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -179,7 +167,7 @@ class TiendasController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='tienda-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='producto-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

@@ -10,6 +10,7 @@ $this->menu=array(
 	array('label'=>'Update Tienda','url'=>array('update','id'=>$model->id)),
 	array('label'=>'Delete Tienda','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Tienda','url'=>array('admin')),
+	array('label'=>'Agregar Productos','url'=>array('producto/create')),
 );
 ?>
 

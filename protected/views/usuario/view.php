@@ -3,18 +3,18 @@ $this->breadcrumbs=array(
 	'Usuarios'=>array('index'),
 	$model->id,
 );?>
-<h3><?php echo $model->nombre; ?></h3>
+
 <div class="row-fluid">
-	<div class="span2">
+	<div class="span3">		
 		<?php 
 			$images_path = realpath(Yii::app()->basePath . '/../images/usuario');
 			echo CHtml::image(Yii::app()->request->baseUrl.'/images/usuario/'.$model->imagen); 
 		?>
-	</div>
-	<div class="span7">
+
 		<h4>Información</h4>
 		<?php $this->widget('bootstrap.widgets.TbDetailView',array(
 			'data'=>$model,
+			'htmlOptions'=>array('class'=>'span12'),
 			'attributes'=>array(				
 				'nombre',
 				array(
@@ -25,35 +25,21 @@ $this->breadcrumbs=array(
 				'ulltima_visita',
 				'fecha_creada',
 			),
-		)); ?>
-
-		<h4>Tiendas de <?php echo $model->nombre; ?></h4>		
-		<?php	
-		    /*$this->widget(
-		    'bootstrap.widgets.TbThumbnails',
-		    array(
-		    'dataProvider' => $dataProvider,
-		    'template' => "{items}\n{pager}",
-		    'itemView' => '_thumbs',
-		    )
-		    );
-		    */
-		?>
-
+		)); ?>		
+	</div>
+	<div class="span6">
 		<div class="row-fluid">
-		<?php 
-			$cont = 1;
-			foreach ($model->tiendas as $key) {
-				if($cont == 4){
-					echo '</div><!--row-fluid--><br><div class="row-fluid">';
-					$cont = 1;
-				}
-				$cont++;
-				echo '<div class="span4 thumbnail">';
-				$this->renderPartial('_thumbs', array('model'=>$key));
-				echo '</div>';
-			} 
-		?>			
+			<h4>Tiendas de <?php echo $model->nombre; ?></h4>		
+			<?php	
+			    $this->widget(
+			    'bootstrap.widgets.TbThumbnails',
+			    array(
+			    'dataProvider' => $dataProvider,
+			    'template' => "{items}\n{pager}",
+			    'itemView' => '_thumbs',
+			    )
+			    );		    
+			?>
 		</div>
 
 	</div>

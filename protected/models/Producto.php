@@ -1,31 +1,37 @@
 <?php
 
 /**
- * This is the model class for table "tienda".
+ * This is the model class for table "producto".
  *
- * The followings are the available columns in table 'tienda':
+ * The followings are the available columns in table 'producto':
  * @property integer $id
- * @property integer $usuario_id
- * @property integer $ciudad_id
+ * @property integer $tienda_id
+ * @property integer $categoria_id
+ * @property integer $estado_id
  * @property string $nombre
- * @property string $direccion
+ * @property string $descripcion
+ * @property double $precio
  * @property integer $activo
- * @property string $ruta
  * @property string $fecha_creada
  *
  * The followings are the available model relations:
- * @property Producto[] $productos
- * @property Ciudad $ciudad
- * @property Usuario $usuario
+ * @property Detalle[] $detalles
+ * @property ImagenProducto[] $imagenProductos
+ * @property Oferta[] $ofertas
+ * @property Categoria $categoria
+ * @property Estado $estado
+ * @property Tienda $tienda
+ * @property ProductoTag[] $productoTags
+ * @property Seleccion[] $seleccions
  */
-class Tienda extends CActiveRecord
+class Producto extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tienda';
+		return 'producto';
 	}
 
 	/**
@@ -36,12 +42,13 @@ class Tienda extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('usuario_id, ciudad_id, nombre, direccion, ruta, fecha_creada', 'required'),
-			array('usuario_id, ciudad_id, activo', 'numerical', 'integerOnly'=>true),
-			array('nombre, ruta', 'length', 'max'=>150),
+			array('tienda_id, categoria_id, estado_id, nombre, descripcion, precio, fecha_creada', 'required'),
+			array('tienda_id, categoria_id, estado_id, activo', 'numerical', 'integerOnly'=>true),
+			array('precio', 'numerical'),
+			array('nombre', 'length', 'max'=>150),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, usuario_id, ciudad_id, nombre, direccion, activo, ruta, fecha_creada', 'safe', 'on'=>'search'),
+			array('id, tienda_id, categoria_id, estado_id, nombre, descripcion, precio, activo, fecha_creada', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,9 +60,14 @@ class Tienda extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'productos' => array(self::HAS_MANY, 'Producto', 'tienda_id'),
-			'ciudad' => array(self::BELONGS_TO, 'Ciudad', 'ciudad_id'),
-			'usuario' => array(self::BELONGS_TO, 'Usuario', 'usuario_id'),
+			'detalles' => array(self::HAS_MANY, 'Detalle', 'producto_id'),
+			'imagenProductos' => array(self::HAS_MANY, 'ImagenProducto', 'producto_id'),
+			'ofertas' => array(self::HAS_MANY, 'Oferta', 'producto_id'),
+			'categoria' => array(self::BELONGS_TO, 'Categoria', 'categoria_id'),
+			'estado' => array(self::BELONGS_TO, 'Estado', 'estado_id'),
+			'tienda' => array(self::BELONGS_TO, 'Tienda', 'tienda_id'),
+			'productoTags' => array(self::HAS_MANY, 'ProductoTag', 'producto_id'),
+			'seleccions' => array(self::HAS_MANY, 'Seleccion', 'producto_id'),
 		);
 	}
 
@@ -66,12 +78,13 @@ class Tienda extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'usuario_id' => 'Usuario',
-			'ciudad_id' => 'Ciudad',
+			'tienda_id' => 'Tienda',
+			'categoria_id' => 'Categoria',
+			'estado_id' => 'Estado',
 			'nombre' => 'Nombre',
-			'direccion' => 'Direccion',
+			'descripcion' => 'Descripcion',
+			'precio' => 'Precio',
 			'activo' => 'Activo',
-			'ruta' => 'Ruta',
 			'fecha_creada' => 'Fecha Creada',
 		);
 	}
@@ -95,12 +108,13 @@ class Tienda extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('usuario_id',$this->usuario_id);
-		$criteria->compare('ciudad_id',$this->ciudad_id);
+		$criteria->compare('tienda_id',$this->tienda_id);
+		$criteria->compare('categoria_id',$this->categoria_id);
+		$criteria->compare('estado_id',$this->estado_id);
 		$criteria->compare('nombre',$this->nombre,true);
-		$criteria->compare('direccion',$this->direccion,true);
+		$criteria->compare('descripcion',$this->descripcion,true);
+		$criteria->compare('precio',$this->precio);
 		$criteria->compare('activo',$this->activo);
-		$criteria->compare('ruta',$this->ruta,true);
 		$criteria->compare('fecha_creada',$this->fecha_creada,true);
 
 		return new CActiveDataProvider($this, array(
@@ -112,29 +126,10 @@ class Tienda extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Tienda the static model class
+	 * @return Producto the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-
-	public static function listTiendas(){
-
-		$model=Tienda::model()->findAll(array(
-		    'condition'=>'usuario_id=:user',
-		    'params'=>array(':user'=>Yii::app()->user->id),
-		));
-
-		//print_r($model);
-		
-
-		//$model = Tienda::model()->findAll();
-		$arreglo = array();
-		foreach ($model as $p) {			
-			$arreglo[$p->id] = $p->nombre;
-		}		
-
-		return $arreglo;
-	}	
 }
