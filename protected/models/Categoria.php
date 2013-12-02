@@ -99,4 +99,13 @@ class Categoria extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	public static function listCategorias(){
+		$model = Categoria::model()->findAll();
+		$arreglo = array();
+		foreach ($model as $p) {
+			$arreglo[$p->id] = $p->nombre;
+		}
+		return $arreglo;
+	}	
 }

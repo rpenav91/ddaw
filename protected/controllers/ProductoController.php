@@ -69,6 +69,9 @@ class ProductoController extends Controller
 		if(isset($_POST['Producto']))
 		{
 			$model->attributes=$_POST['Producto'];
+			$model->estado_id = 1;
+			$model->activo = 1;
+			$model->fecha_creada = new CDbExpression('NOW()');
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -125,6 +128,7 @@ class ProductoController extends Controller
 	/**
 	 * Lists all models.
 	 */
+	/*
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Producto');
@@ -132,6 +136,7 @@ class ProductoController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 	}
+	*/
 
 	/**
 	 * Manages all models.

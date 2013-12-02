@@ -50,8 +50,22 @@ class TiendasController extends Controller
 	 */
 	public function actionView($id)
 	{
+		
+
+
+		$productos=new CActiveDataProvider('Producto', array(
+			'criteria'=>array(
+		    	'condition'=>'tienda_id=:tienda',
+		    	'params'=>array(':tienda'=>$id),
+			),
+		));
+
+
+
+
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+			'productos'=>$productos,
 		));
 	}
 

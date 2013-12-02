@@ -13,22 +13,52 @@ $this->menu=array(
 	array('label'=>'Agregar Productos','url'=>array('producto/create')),
 );
 ?>
+<div class="row-fluid">
+	<div class="span3">		
+		<div class="thumbnail">
+			<?php 
+				$images_path = realpath(Yii::app()->basePath . '/../images/usuario');
+				echo CHtml::image(Yii::app()->request->baseUrl.'/images/usuario/'.$model->usuario->imagen); 
+			?>
+		</div>	
+	</div>
+	<div class="span9 thumbnail">
+		<h3 class="text-center"><?php echo $model->nombre; ?></h3>
+		<hr>
+		<div class="row-fluid text-center info">
+			<div class="span4">
+				<h4>Dirección</h4>
+				<p><?php echo $model->ciudad->nombre .', '.$model->ciudad->pais->nombre; ?></p>
+			</div>
+			<div class="span4">
+				<h4>Productos</h4>
+				<p>8 productos</p>
 
-<h1><?php echo $model->nombre; ?></h1>
+			</div>
+			<div class="span4">
+				<h4>Ofertas</h4>
+				<p>0 Ofertas</p>
+			</div>
 
-<?php $this->widget('bootstrap.widgets.TbDetailView',array(
-	'data'=>$model,
-	'attributes'=>array(		
-		array(
-			'label'=>'Dueño',
-			'value'=>$model->usuario->nombre,
-		),
-		array(
-			'label'=>'Ubicación',
-			'value'=>$model->ciudad->nombre.', '.$model->ciudad->pais->nombre,
-		),
-		'nombre',
-		'direccion',		
-		'fecha_creada',
-	),
-)); ?>
+		</div>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span3"></div>
+	<div class="span9">		
+	<?php
+		$this->breadcrumbs=array(
+			'Tiendas',
+		);
+
+		?>
+		<?php $this->widget('bootstrap.widgets.TbListView',array(
+			'dataProvider'=>$productos,
+			'itemView'=>'_thumbProducto',
+			'summaryText'=>false,
+		)); 
+	?>
+
+	</div>
+
+</div>

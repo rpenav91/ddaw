@@ -13,19 +13,15 @@
 	?>
 </div>
 
-<div class="span3 text-center">
-	<?php
-		$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-		    'id'=>'horizontalForm',
-		    'type'=>'vertical',
+<div class="span3">
+	<br>
+	<div class="thumbnail text-center">
+		<img src="http://lorempixel.com/400/400/" alt="">
+		<br>
+		<?php echo CHtml::link('Crea tu Tienda',array('tiendas/create'),array('class'=>'btn btn-info')); ?>
+		<br><br>
+	</div>
+    
+    
 
-		    'htmlOptions'=> array('class'=>'span12'),
-		)); 
-	?>
-	<?php 
-		echo $form->dropDownList($model,"pais_id", Pais::listPaises(),array('multiple'=>true));
-	?>
-	<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Submit')); ?>
-
-	<?php $this->endWidget(); ?>
 </div>

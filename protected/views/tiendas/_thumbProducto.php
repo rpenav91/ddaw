@@ -1,4 +1,4 @@
-<div class="span3 thumbnail text-center">    
+<div class="span4 thumbnail text-center">    
         <img src="http://lorempixel.com/400/300/" alt="">
     <h3><?php echo $data->nombre; ?></h3>
     <hr>
