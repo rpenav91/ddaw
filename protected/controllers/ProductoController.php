@@ -27,7 +27,7 @@ class ProductoController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','pais', 'categoria'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -54,6 +54,7 @@ class ProductoController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+
 
 	/**
 	 * Creates a new model.
@@ -178,4 +179,42 @@ class ProductoController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+	public function actionCategoria($id){
+		
+		$categorias=new CActiveDataProvider('Producto', array(
+			'criteria'=>array(
+		    	'condition'=>'categoria_id=:id',
+		    	'params'=>array(':id'=>$id),
+			),
+		));
+
+		$this->render('categoria',array(
+			//'model'=>$this->loadModel($id),
+			'categorias'=>$categorias,
+		));
+	}
+
+	public function actionPais($id){
+		
+		$rawData = Yii::app()->db->createCommand()
+			->select('p.id, p.nombre AS nom_pro, c.nombre AS nom_cate, e.nombre AS nom_est, p.nombre AS nom_prod,
+			 p.descripcion, p.precio, pa.nombre AS nom_pais, ci.nombre AS nom_ciudad, t.nombre AS nom_tienda')
+			->from('producto p, tienda t, ciudad ci, pais pa, estado e, categoria c')
+			->where('p.tienda_id = t.id And t.ciudad_id = ci.id AND p.estado_id=e.id AND p.categoria_id = c.id AND ci.pais_id = pa.id AND pa.id = :id', array(':id'=>$id))
+			->queryAll();
+
+
+		$rawData = Ddaw::arrayToObject($rawData);
+
+		$dataProvider = new CArrayDataProvider($rawData);	
+
+		$this->render('pais',array(
+			'productos'=>$dataProvider,
+		));		
+						
+			
+	}
+
 }
+
