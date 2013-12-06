@@ -130,6 +130,7 @@ class UsuarioController extends Controller
 			$model=$this->loadModel($id);		
 			if(isset($_POST['Usuario']))
 			{
+				print_r($_POST['Usuario']);
 				$model->attributes=$_POST['Usuario'];
 				$model->password = CPasswordHelper::hashPassword($model->password);
 

@@ -6,11 +6,47 @@
 $this->pageTitle=Yii::app()->name . ' - Inicio';
 ?>
 
-<div class="row">
+<div class="row-fluid">
 	<div class="span9">
 		<div class="well">
 			<h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
 		</div>
+
+
+	<script type="text/javascript">
+		
+		var inicio = 3;
+		var offset = 0;
+		function vermas(){
+			offset = offset +3;
+			$.ajax({
+				'type':'POST',
+				'success':function(html){
+					$('#vermas').append(html);					
+				},
+				'data':{inicio:inicio,offset:offset},
+				'url':'<?php echo $this->createUrl('site/vermas') ?>',
+			});
+
+		}
+
+	</script>		
+
+<div id="vermas" class="row-fluid">
+	<?php
+		$tiendas = Tienda::listTresTiendas(3,0);
+		foreach ($tiendas as $tienda) {
+			$this->renderPartial('_tiendaThumb',array('tienda'=>$tienda));
+		}
+	?>
+</div>
+
+<div class="row-fluid text-center">
+	<h2> <a href="#" onclick="vermas();">¿Queres ver más? Clickeame!</a> </h2>
+</div>
+
+
+
 	</div>
 
 	<?php if(Yii::app()->user->isGuest): ?>

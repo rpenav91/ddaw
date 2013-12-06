@@ -122,4 +122,13 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+
+	public function actionVermas(){
+		if(isset($_POST['inicio'],$_POST['offset'])) {
+			$tiendas = Tienda::listTresTiendas($_POST['inicio'],$_POST['offset']);
+			foreach ($tiendas as $tienda) {
+				$this->renderPartial('_tiendaThumb',array('tienda'=>$tienda));
+			}
+		}
+	}
 }

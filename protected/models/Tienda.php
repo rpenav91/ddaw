@@ -54,9 +54,15 @@ class Tienda extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'productos' => array(self::HAS_MANY, 'Producto', 'tienda_id'),
+			'productosCount' => array(self::STAT, 'Producto', 'tienda_id'),
 			'ciudad' => array(self::BELONGS_TO, 'Ciudad', 'ciudad_id'),
 			'usuario' => array(self::BELONGS_TO, 'Usuario', 'usuario_id'),
 		);
+	}
+
+	public function getPais()
+	{
+		return $this->ciudad->pais->nombre;
 	}
 
 	/**
@@ -136,5 +142,16 @@ class Tienda extends CActiveRecord
 		}		
 
 		return $arreglo;
-	}	
+	}
+
+	public static function listTresTiendas($inicio,$offset) {
+		$tiendas = Yii::app()->db->createCommand()
+			->select('t.id AS idtienda, u.id AS idusuario , u.nombre AS nombreusuario, t.nombre AS nombretienda, p.nombre AS nombrepais, c.nombre AS nombreciudad')
+			->from('tienda t, ciudad c, pais p, usuario u')
+			->where('t.ciudad_id=c.id AND t.usuario_id=u.id AND c.pais_id=p.id')
+			->limit($inicio,$offset)
+			->queryAll();
+
+		return Ddaw::arrayToObject($tiendas);
+	}
 }

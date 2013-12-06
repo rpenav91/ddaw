@@ -32,12 +32,12 @@ $this->menu=array(
 			</div>
 			<div class="span4">
 				<h4>Productos</h4>
-				<p>8 productos</p>
+				<p><?php echo $model->productosCount; ?></p>
 
 			</div>
 			<div class="span4">
 				<h4>Ofertas</h4>
-				<p>0 Ofertas</p>
+				<p><?php echo $model->pais; ?></p>
 			</div>
 
 		</div>

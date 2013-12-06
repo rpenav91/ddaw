@@ -18,7 +18,7 @@
 
 	<?php 
 		if(!Yii::app()->user->isGuest)
-		echo $form->checkBoxListRow($model,'activo',array('')); 		
+		echo $form->checkBoxRow($model,'activo',array('')); 		
 	?>
 
 	<?php //echo $form->textFieldRow($model,'llave_activacion',array('class'=>'span5','maxlength'=>150)); ?>

@@ -71,6 +71,11 @@ class Producto extends CActiveRecord
 		);
 	}
 
+	public function getPais()
+	{
+		return $this->tienda->ciudad->pais->nombre;
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
